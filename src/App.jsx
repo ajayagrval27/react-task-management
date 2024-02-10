@@ -3,10 +3,12 @@ import './App.css'
 import TaskIndivisual from './Components/TaskIndivisual'
 import TaskListing from './Components/TaskListing'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+// import Cards from './Components/Cards'
 
 function App() {
 	return (
 		<>
+			{/* <Cards /> */}
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" element={<Navigate to="/taskform" />} />

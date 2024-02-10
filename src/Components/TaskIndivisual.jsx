@@ -3,6 +3,7 @@ import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { motion } from 'framer-motion'
 import { useParams, useNavigate, Link } from 'react-router-dom'
+import { addTask, editTask } from '../Redux/Reducers/taskDataReducer'
 
 const TaskIndivisual = () => {
 	let [taskObj, setTaskObj] = useState({
@@ -46,7 +47,6 @@ const TaskIndivisual = () => {
 	}
 
 	const submitData = () => {
-		// form validation check for empty field
 		if (taskObj.taskTitle === '') {
 			errorObj['taskTitle'] = 'Please enter task title'
 		} else {
@@ -56,24 +56,48 @@ const TaskIndivisual = () => {
 
 		if (Object.keys(errorObj).length === 0) {
 			if (params.editId) {
-				dispatch({ type: 'EDIT_TASK', taskObj })
+				dispatch(editTask(taskObj))
 				navigate('/taskdata')
 			} else {
 				taskObj.id = countId + 1
 				setCountId(countId + 1)
-				dispatch({
-					type: 'ADD_TASK',
-					taskObj,
-				})
-				navigate('/taskdata')
 				localStorage.setItem('countId', JSON.stringify(countId + 1))
+				dispatch(addTask(taskObj))
+				navigate('/taskdata')
 			}
-			setTaskObj({
-				taskTitle: '',
-				isCompleted: false,
-			})
 		}
+		setTaskObj({ taskTitle: '', isCompleted: false })
 	}
+
+	// const submitData = () => {
+	// 	// form validation check for empty field
+	// 	if (taskObj.taskTitle === '') {
+	// 		errorObj['taskTitle'] = 'Please enter task title'
+	// 	} else {
+	// 		delete errorObj['taskTitle']
+	// 	}
+	// 	setErrorObj({ ...errorObj })
+
+	// 	if (Object.keys(errorObj).length === 0) {
+	// 		if (params.editId) {
+	// 			dispatch({ type: 'EDIT_TASK', taskObj })
+	// 			navigate('/taskdata')
+	// 		} else {
+	// 			taskObj.id = countId + 1
+	// 			setCountId(countId + 1)
+	// 			dispatch({
+	// 				type: 'ADD_TASK',
+	// 				taskObj,
+	// 			})
+	// 			navigate('/taskdata')
+	// 			localStorage.setItem('countId', JSON.stringify(countId + 1))
+	// 		}
+	// 		setTaskObj({
+	// 			taskTitle: '',
+	// 			isCompleted: false,
+	// 		})
+	// 	}
+	// }
 
 	return (
 		<>
