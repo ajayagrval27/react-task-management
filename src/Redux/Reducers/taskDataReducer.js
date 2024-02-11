@@ -26,13 +26,18 @@
 
 import { createSlice } from '@reduxjs/toolkit'
 
-const initialState = []
+const initialState = {
+	taskDatas: [],
+	error: null,
+	loading: false,
+}
 
 const taskDataSlice = createSlice({
 	name: 'taskData',
-	initialState: initialState,
+	initialState,
 	reducers: {
 		addTask: (state, action) => {
+			// state.taskDatas.push(action.payload)
 			state.push(action.payload)
 		},
 		editTask: (state, action) => {

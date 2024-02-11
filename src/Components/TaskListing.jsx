@@ -20,6 +20,8 @@ const TaskListing = () => {
 	// const [filterOption, setFilterOption] = useState('')
 	// const filteredTasks = filterTaskDetails(taskDetails, filterOption)
 
+	console.log(startIndex, endIndex, filteredTasks.length)
+
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 
@@ -34,6 +36,7 @@ const TaskListing = () => {
 		)
 		setFilteredTasks(filteredData)
 		setTotalItems(filteredData.length)
+		setCurrentPage(1)
 	}
 
 	const paginate = (pageNumber) => {
@@ -44,7 +47,6 @@ const TaskListing = () => {
 		navigate(`/taskform/${editId}`)
 	}
 	const deleteData = (id) => {
-		console.log('id', id)
 		dispatch(deleteTask({ id: id }))
 	}
 
@@ -184,13 +186,12 @@ const TaskListing = () => {
 							margin: 'auto',
 						}}
 					>
-						{/* Add first/previous if needed */}
 						<Pagination.First onClick={() => paginate(1)} />
-						<Pagination.Prev
-							onClick={() => paginate(currentPage - 1)}
-						/>
-
-						{/* Create numbered pagination items */}
+						{currentPage !== 1 && (
+							<Pagination.Prev
+								onClick={() => paginate(currentPage - 1)}
+							/>
+						)}
 						{Array.from({
 							length: Math.ceil(totalItems / itemsPerPage),
 						}).map((_, index) => (
@@ -202,11 +203,11 @@ const TaskListing = () => {
 								{index + 1}
 							</Pagination.Item>
 						))}
-
-						{/* Add next/last buttons if needed */}
-						<Pagination.Next
-							onClick={() => paginate(currentPage + 1)}
-						/>
+						{endIndex < filteredTasks.length && (
+							<Pagination.Next
+								onClick={() => paginate(currentPage + 1)}
+							/>
+						)}
 						<Pagination.Last
 							onClick={() =>
 								paginate(Math.ceil(totalItems / itemsPerPage))
