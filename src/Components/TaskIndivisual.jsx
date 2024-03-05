@@ -3,7 +3,7 @@ import { Form } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { motion } from 'framer-motion'
 import { useParams, useNavigate, Link } from 'react-router-dom'
-import { addTask, editTask } from '../Redux/Reducers/taskDataReducer'
+import { addTask, editTask } from '../Redux/Store/taskData/taskDataSlice'
 
 const TaskIndivisual = () => {
 	let [taskObj, setTaskObj] = useState({
@@ -17,7 +17,7 @@ const TaskIndivisual = () => {
 	const dispatch = useDispatch()
 	const navigate = useNavigate()
 	const params = useParams()
-	const taskDetails = useSelector((state) => state.taskData)
+	const taskDetails = useSelector((state) => state.taskData.taskDatas)
 
 	useEffect(() => {
 		if (params.editId) {

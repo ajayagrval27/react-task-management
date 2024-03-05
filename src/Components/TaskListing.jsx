@@ -3,12 +3,12 @@ import { Table, Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { motion } from 'framer-motion'
 import { Link, useNavigate } from 'react-router-dom'
-import { deleteTask } from '../Redux/Reducers/taskDataReducer'
-import { filterTaskDetails } from '../Redux/Reducers/filterReducer'
+// import { filterTaskDetails } from '../Redux/Reducers/filterReducer'
 import { Pagination } from 'react-bootstrap'
+import { deleteTask } from '../Redux/Store/taskData/taskDataSlice'
 
 const TaskListing = () => {
-	let taskDetails = useSelector((state) => state.taskData)
+	let taskDetails = useSelector((state) => state.taskData.taskDatas)
 	const [filteredTasks, setFilteredTasks] = useState(taskDetails)
 	const [searchValue, setSearchValue] = useState('')
 	const [currentPage, setCurrentPage] = useState(1)
@@ -19,8 +19,6 @@ const TaskListing = () => {
 	const [totalItems, setTotalItems] = useState(filteredTasks.length)
 	// const [filterOption, setFilterOption] = useState('')
 	// const filteredTasks = filterTaskDetails(taskDetails, filterOption)
-
-	console.log(startIndex, endIndex, filteredTasks.length)
 
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
@@ -85,16 +83,16 @@ const TaskListing = () => {
 
 							<div
 								style={{ width: '40%' }}
-								className="form-group has-search"
+								className="form form-group has-search"
 							>
 								<span className="fa fa-search form-control-feedback"></span>
 								<input
 									type="text"
+									name="SerchValue"
+									value={searchValue}
 									className="form-control"
 									placeholder="Search Task..."
-									value={searchValue}
 									onChange={(e) => {
-										setSearchValue(e.target.value)
 										handleFilter(e.target.value)
 									}}
 								/>

@@ -7,7 +7,7 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit'
 import { persistStore, persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import taskDataReducer from './taskData/taskDataSlice'
+import taskDataSlice from './taskData/taskDataSlice'
 
 const persistConfig = {
 	key: 'root',
@@ -15,7 +15,7 @@ const persistConfig = {
 }
 
 const rootReducer = combineReducers({
-	taskData: taskDataReducer,
+	taskData: taskDataSlice,
 })
 
 const persistedStore = persistReducer(persistConfig, rootReducer)

@@ -11,15 +11,18 @@ const taskDataSlice = createSlice({
 	initialState,
 	reducers: {
 		addTask: (state, action) => {
-			// state.taskDatas.push(action.payload)
-			state.push(action.payload)
+			state.taskDatas.push(action.payload)
 		},
 		editTask: (state, action) => {
-			let index = state.findIndex((x) => x.id === action.payload.id)
-			state.splice(index, 1, action.payload)
+			let index = state.taskDatas.findIndex(
+				(x) => x.id === action.payload.id
+			)
+			state.taskDatas.splice(index, 1, action.payload)
 		},
 		deleteTask: (state, action) => {
-			state = state.filter((x) => x.id !== action.payload.id)
+			state.taskDatas = state.taskDatas.filter(
+				(x) => x.id !== action.payload.id
+			)
 			return state
 		},
 	},
